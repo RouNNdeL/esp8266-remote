@@ -6,14 +6,6 @@
 #include "config.h"
 #include "ir_handler.h"
 
-#ifdef SERIAL_DEBUG
-#define PRINTLN(a) Serial.println(a)
-#define PRINT(a) Serial.print(a)
-#else
-#define PRINTLN(a)
-#define PRINT(a)
-#endif
-
 ESP8266WebServer server(80);
 
 uint64_t getUInt64fromHex(String str)
@@ -52,10 +44,16 @@ void ICACHE_FLASH_ATTR receiveCode()
 {
     if(server.method() == HTTP_POST)
     {
-        if(server.hasArg("id"))
+        if(server.hasArg("p"))
         {
-            uint64_t value = getUInt64fromHex(server.arg("value"));
-            if(addCode((uint8_t) server.arg("id").toInt(), value))
+            PRINTLN("Received code. protocol:" + server.arg("p") + ", v:" + server.arg("v") + ", support:" + server.arg("s"));
+            uint64_t value = getUInt64fromHex(server.arg("v"));
+            if(server.hasArg("s"))
+            {
+                uint64_t support = getUInt64fromHex(server.arg("s"));
+                addCode((uint8_t) server.arg("p").toInt(), support);
+            }
+            if(addCode((uint8_t) server.arg("p").toInt(), value))
             {
                 server.send(204);
             }

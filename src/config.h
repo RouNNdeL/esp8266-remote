@@ -22,4 +22,12 @@
 
 #define SERIAL_DEBUG
 
+#ifdef SERIAL_DEBUG
+#define PRINTLN(a) Serial.println(a)
+#define PRINT(a) Serial.print(a)
+#else
+#define PRINTLN(a)
+#define PRINT(a)
+#endif
+
 #endif //WIFIREMOTE_CONFIG_H

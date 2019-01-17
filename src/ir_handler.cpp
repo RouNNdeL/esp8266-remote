@@ -34,7 +34,7 @@ uint8_t addCode(uint8_t id, uint64_t value)
 
 void handleCodes()
 {
-    if(que_length)
+    while(que_length)
     {
         que_length--;
         uint8_t code_id = id_que[0];
@@ -52,24 +52,37 @@ void sendCode(uint8_t id, uint64_t value)
     digitalWrite(INFO_PIN, 1);
     switch(id)
     {
-        case CODE_NEC:
+        case PROTOCOL_NEC:
         {
+            if(value == CODE_VALUE_PIONEER_ON || value == CODE_VALUE_PIONEER_TOGGLE)
+            {
+                send.sendNEC(value);
+                PRINTLN("Sending NEC: " + String((unsigned long) value, 16));
+                delay(10);
+            }
             send.sendNEC(value);
+            PRINTLN("Sending NEC: " + String((unsigned long) value, 16));
+            break;
         }
-        case CODE_PANASONIC:
+        case PROTOCOL_PANASONIC:
         {
             /* Panasonic TVs require for holding the button in order to turn  on the tv */
-            if(value == CODE_VALUE_PANASONIC_ON)
+            if(value == CODE_VALUE_PANASONIC_ON || value == CODE_VALUE_PANASONIC_TOGGLE)
             {
                 for(int i = 0; i < 4; ++i)
                 {
                     send.sendPanasonic(0x4004, (uint32_t) value);
+                    delay(5);
+                    PRINTLN("Sending Panasonic: " + String((unsigned long) value, 16));
                 }
             }
             send.sendPanasonic(0x4004, (uint32_t) value);
+            PRINTLN("Sending Panasonic: " + String((unsigned long) value, 16));
+            break;
         }
         default:
             break;
     }
+    delay(10);
     digitalWrite(INFO_PIN, 0);
 }
