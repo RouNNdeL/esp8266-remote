@@ -11,6 +11,7 @@
 #define IR_PIN 4
 #define INFO_PIN 5
 #define QUE_LENGTH 32
+#define MAX_RAW_SIZE 35
 
 #ifndef AP_NAME
 #define AP_NAME "IR Remote"
@@ -20,7 +21,7 @@
 #define DEVICE_ID "ir_remote"
 #endif
 
-#define SERIAL_DEBUG
+
 
 #ifdef SERIAL_DEBUG
 #define PRINTLN(a) Serial.println(a)

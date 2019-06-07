@@ -8,6 +8,7 @@
 #define CODE_TV_TOGGLE 0x10
 #define PROTOCOL_NEC 0xA1
 #define PROTOCOL_PANASONIC 0xA2
+#define PROTOCOL_RAW36K 0xA3
 
 #define CODE_VALUE_PANASONIC_ON 0x1007C7D
 #define CODE_VALUE_PANASONIC_TOGGLE 0x100BCBD
@@ -21,6 +22,8 @@ uint8_t addCode(uint8_t id, uint64_t value);
 
 void handleCodes();
 
-void sendCode(uint8_t id, uint64_t value);
+void sendCode();
+
+uint8_t addRaw(String raw);
 
 #endif //WIFIREMOTE_IR_HANDLER_H
