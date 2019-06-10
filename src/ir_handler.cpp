@@ -85,10 +85,8 @@ void sendCode() {
         case PROTOCOL_PANASONIC: {
             /* Panasonic TVs require for holding the button in order to turn  on the tv */
             if(value == CODE_VALUE_PANASONIC_ON || value == CODE_VALUE_PANASONIC_TOGGLE) {
-                for(int i = 0; i < 5; ++i) {
+                for(int i = 0; i < 6; ++i) {
                     send.sendPanasonic(0x4004, (uint32_t) value);
-                    delay(2);
-                    PRINTLN("Sending Panasonic: " + String((unsigned long) value, 16));
                 }
             }
             send.sendPanasonic(0x4004, (uint32_t) value);
