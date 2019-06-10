@@ -97,7 +97,7 @@ void sendCode() {
             uint16_t raw_bytes[MAX_RAW_SIZE] = {0};
             uint16 length = 0;
             for(int i = 0; i < MAX_RAW_SIZE; ++i) {
-                raw_bytes[i] = raw_que[0][i] * 50;
+                raw_bytes[i] = raw_que[0][i] * RAW_MULTIPLIER;
                 if(raw_que[0][i]) {
                     length++;
                 }
